@@ -44,9 +44,5 @@
         <service
             android:name="com.pasiflonet.mobile.ffmpeg.FfmpegIsolatedService"
             android:exported="false"
-            android:process=":ffmpeg" />
-
-            <activity android:name="com.pasiflonet.mobile.ui.IntelFeedActivity" android:exported="false" />
-        <activity android:name="com.pasiflonet.mobile.ui.RadarActivity" android:exported="false" />
-</application>
+            android:process=":ffmpeg" /></application>
 </manifest>

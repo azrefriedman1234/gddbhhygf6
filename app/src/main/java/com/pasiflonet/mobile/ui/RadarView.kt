@@ -9,53 +9,45 @@ import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 
-data class RadarBlip(val relR: Float, val angleRad: Float)
-
 class RadarView @JvmOverloads constructor(
-    ctx: Context, attrs: AttributeSet? = null
-) : View(ctx, attrs) {
+    context: Context, attrs: AttributeSet? = null
+) : View(context, attrs) {
 
-    private val grid = Paint(Paint.ANTI_ALIAS_FLAG).apply { alpha = 60; style = Paint.Style.STROKE; strokeWidth = 2f }
-    private val sweep = Paint(Paint.ANTI_ALIAS_FLAG).apply { alpha = 120; strokeWidth = 4f }
-    private val dot = Paint(Paint.ANTI_ALIAS_FLAG).apply { alpha = 220; style = Paint.Style.FILL }
-
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var angle = 0f
-    private var blips: List<RadarBlip> = emptyList()
 
-    fun setBlips(list: List<RadarBlip>) {
-        blips = list
-        invalidate()
-    }
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
 
-    override fun onDraw(c: Canvas) {
-        super.onDraw(c)
         val w = width.toFloat()
         val h = height.toFloat()
+        val r = min(w, h) * 0.45f
         val cx = w / 2f
         val cy = h / 2f
-        val r = min(cx, cy) * 0.95f
 
-        // rings
-        c.drawCircle(cx, cy, r * 0.33f, grid)
-        c.drawCircle(cx, cy, r * 0.66f, grid)
-        c.drawCircle(cx, cy, r, grid)
+        // background grid
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 2f
+        paint.alpha = 90
+        canvas.drawCircle(cx, cy, r, paint)
+        canvas.drawCircle(cx, cy, r * 0.66f, paint)
+        canvas.drawCircle(cx, cy, r * 0.33f, paint)
 
-        // sweep line
-        val a = angle
-        val x = cx + cos(a) * r
-        val y = cy + sin(a) * r
-        c.drawLine(cx, cy, x, y, sweep)
+        // cross lines
+        paint.alpha = 60
+        canvas.drawLine(cx - r, cy, cx + r, cy, paint)
+        canvas.drawLine(cx, cy - r, cx, cy + r, paint)
 
-        // blips
-        for (b in blips) {
-            val rr = (b.relR.coerceIn(0f, 1f)) * r
-            val bx = cx + cos(b.angleRad) * rr
-            val by = cy + sin(b.angleRad) * rr
-            c.drawCircle(bx, by, 6f, dot)
-        }
+        // sweep
+        paint.alpha = 180
+        val rad = Math.toRadians(angle.toDouble())
+        val x = (cx + r * cos(rad)).toFloat()
+        val y = (cy + r * sin(rad)).toFloat()
+        canvas.drawLine(cx, cy, x, y, paint)
 
         // animate
-        angle += 0.08f
+        angle += 2.2f
+        if (angle >= 360f) angle = 0f
         postInvalidateOnAnimation()
     }
 }
