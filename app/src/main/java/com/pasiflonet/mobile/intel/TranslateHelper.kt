@@ -1,42 +1,96 @@
 package com.pasiflonet.mobile.intel
 
 import android.content.Context
-import com.google.mlkit.nl.translate.TranslateLanguage
-import com.google.mlkit.nl.translate.Translation
-import com.google.mlkit.nl.translate.Translator
-import com.google.mlkit.nl.translate.TranslatorOptions
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
+import android.util.Log
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
+import java.util.concurrent.Executors
 
-class TranslateHelper(ctx: Context) {
-    private val appCtx = ctx.applicationContext
+object TranslateHelper {
+    private const val TAG = "TranslateHelper"
+    private val exec = Executors.newSingleThreadExecutor()
 
-    private val translator: Translator by lazy {
-        val opt = TranslatorOptions.Builder()
-            .setSourceLanguage(TranslateLanguage.ENGLISH)
-            .setTargetLanguage(TranslateLanguage.HEBREW)
-            .build()
-        Translation.getClient(opt)
-    }
+    /**
+     * אפשר להגדיר מפתח אם יש לך. אם לא – משאירים ריק.
+     * שים לב: חלק מהאינסטנסים הציבוריים מוגבלים בקצב.
+     */
+    @Volatile var apiKey: String = ""
 
-    suspend fun ensureModel() {
-        suspendCancellableCoroutine<Unit> { cont ->
-            translator.downloadModelIfNeeded()
-                .addOnSuccessListener { cont.resume(Unit) }
-                .addOnFailureListener { cont.resume(Unit) } // לא מפיל את האפליקציה
+    /** נסה כמה endpoints חינמיים (fallback). */
+    @Volatile var endpoints: List<String> = listOf(
+        "https://libretranslate.de/translate",
+        "https://libretranslate.com/translate"
+    )
+
+    // שימוש נפוץ: translate(text){...} => יעד עברית
+    fun translate(text: String, onResult: (String) -> Unit) =
+        translate(ctx = null, text = text, source = "auto", target = "he", onResult = onResult)
+
+    fun translate(text: String, target: String, onResult: (String) -> Unit) =
+        translate(ctx = null, text = text, source = "auto", target = target, onResult = onResult)
+
+    fun translateToHebrew(text: String, onResult: (String) -> Unit) =
+        translate(ctx = null, text = text, source = "auto", target = "he", onResult = onResult)
+
+    fun translate(
+        ctx: Context? = null,
+        text: String,
+        source: String = "auto",
+        target: String = "he",
+        onResult: (String) -> Unit
+    ) {
+        if (text.isBlank()) { onResult(text); return }
+        exec.execute {
+            val out = runCatching { translateBlocking(text, source, target) }
+                .getOrElse { e ->
+                    Log.w(TAG, "translate failed: ${e.message}")
+                    text
+                }
+            try { onResult(out) } catch (_: Exception) {}
         }
     }
 
-    suspend fun enToHe(text: String): String? {
-        if (text.isBlank()) return null
-        return suspendCancellableCoroutine { cont ->
-            translator.translate(text)
-                .addOnSuccessListener { cont.resume(it) }
-                .addOnFailureListener { cont.resume(null) }
-        }
-    }
+    @JvmStatic
+    fun translateBlocking(text: String, source: String = "auto", target: String = "he"): String {
+        val q = text.trim()
+        if (q.isEmpty()) return text
 
-    fun close() {
-        runCatching { translator.close() }
+        val body = buildString {
+            append("q=").append(URLEncoder.encode(q, "UTF-8"))
+            append("&source=").append(URLEncoder.encode(source, "UTF-8"))
+            append("&target=").append(URLEncoder.encode(target, "UTF-8"))
+            append("&format=text")
+            if (apiKey.isNotBlank()) append("&api_key=").append(URLEncoder.encode(apiKey, "UTF-8"))
+        }.toByteArray(StandardCharsets.UTF_8)
+
+        var lastErr: Exception? = null
+        for (ep in endpoints) {
+            try {
+                val conn = (URL(ep).openConnection() as HttpURLConnection).apply {
+                    requestMethod = "POST"
+                    connectTimeout = 7000
+                    readTimeout = 9000
+                    doOutput = true
+                    setRequestProperty("Accept", "application/json")
+                    setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+                }
+                conn.outputStream.use { it.write(body) }
+
+                val code = conn.responseCode
+                val stream = if (code in 200..299) conn.inputStream else conn.errorStream
+                val resp = stream.bufferedReader().use { it.readText() }
+
+                val json = JSONObject(resp)
+                val translated = json.optString("translatedText", "")
+                if (translated.isNotBlank()) return translated
+            } catch (e: Exception) {
+                lastErr = e
+            }
+        }
+        if (lastErr != null) throw lastErr
+        return text
     }
 }

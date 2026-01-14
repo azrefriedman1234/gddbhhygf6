@@ -1,46 +1,68 @@
 package com.pasiflonet.mobile.ui
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.pasiflonet.mobile.intel.IntelItem
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class IntelFeedAdapter(
-    private val items: List<IntelItem>,
-    private val onClick: (IntelItem) -> Unit
-) : RecyclerView.Adapter<IntelFeedAdapter.VH>() {
+    private val onClick: ((Any) -> Unit)? = null
+) : RecyclerView.Adapter<IntelFeedAdapter.Holder>() {
 
-    private val fmt = SimpleDateFormat("dd/MM HH:mm", Locale.getDefault())
+    private val items = mutableListOf<Any>()
 
-    class VH(val root: View, val title: TextView, val titleHe: TextView, val meta: TextView) : RecyclerView.ViewHolder(root)
+    fun submitList(newItems: List<*>?) = setItems(newItems)
+    fun updateList(newItems: List<*>?) = setItems(newItems)
+    fun setItems(newItems: List<*>?) {
+        items.clear()
+        newItems?.forEach { if (it != null) items.add(it) }
+        notifyDataSetChanged()
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val ctx = parent.context
-        val root = LinearLayout(ctx).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(18, 14, 18, 14)
-        }
-        val t1 = TextView(ctx).apply { textSize = 16f }
-        val t2 = TextView(ctx).apply { textSize = 14f }
-        val meta = TextView(ctx).apply { textSize = 12f }
-        root.addView(t1)
-        root.addView(t2)
-        root.addView(meta)
-        return VH(root, t1, t2, meta)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        val v = LayoutInflater.from(parent.context)
+            .inflate(android.R.layout.simple_list_item_2, parent, false)
+        return Holder(v)
+    }
+
+    override fun onBindViewHolder(holder: Holder, position: Int) {
+        val item = items[position]
+        val title = pickString(item, listOf("title","headline","text","content","message")) ?: item.toString()
+        val sub = pickString(item, listOf("translated","he","translation","source","url","link")) ?: ""
+        holder.t1.text = title
+        holder.t2.text = sub
+        holder.itemView.setOnClickListener { onClick?.invoke(item) }
     }
 
     override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(h: VH, pos: Int) {
-        val it = items[pos]
-        h.title.text = it.title
-        h.titleHe.text = it.titleHe ?: ""
-        h.meta.text = "${it.source} • ${if (it.pubMillis > 0) fmt.format(Date(it.pubMillis)) else ""}"
-        h.root.setOnClickListener { onClick(it) }
+    class Holder(v: View) : RecyclerView.ViewHolder(v) {
+        val t1: TextView = v.findViewById(android.R.id.text1)
+        val t2: TextView = v.findViewById(android.R.id.text2)
+    }
+
+    private fun pickString(obj: Any, names: List<String>): String? {
+        val c = obj.javaClass
+        for (n in names) {
+            // getter
+            try {
+                val getter = "get" + n.replaceFirstChar { it.uppercase() }
+                val m = c.methods.firstOrNull { it.parameterTypes.isEmpty() && (it.name == getter || it.name == n) }
+                val v = m?.invoke(obj)
+                val s = v?.toString()?.trim()
+                if (!s.isNullOrEmpty() && s != "null") return s
+            } catch (_: Exception) {}
+            // field
+            try {
+                val f = c.declaredFields.firstOrNull { it.name == n }
+                if (f != null) {
+                    f.isAccessible = true
+                    val s = f.get(obj)?.toString()?.trim()
+                    if (!s.isNullOrEmpty() && s != "null") return s
+                }
+            } catch (_: Exception) {}
+        }
+        return null
     }
 }
