@@ -35,7 +35,7 @@ object DashboardWidgets {
         rvX.layoutManager = LinearLayoutManager(activity)
         val adapter = XFeedAdapter { item ->
             val url = item.link
-            if (!url.isNullOrBlank()) {
+            if (!url.orEmpty().isNullOrBlank()) {
                 try {
                     activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                 } catch (_: Throwable) {
