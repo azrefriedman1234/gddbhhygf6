@@ -10,7 +10,7 @@
     android:descendantFocusability="blocksDescendants">
 
     <ImageButton
-        android:id="@+id/btnDetails"
+        android:id="@+@id/btnDetails"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:src="@android:drawable/ic_menu_search"
@@ -22,7 +22,7 @@
         android:padding="10dp"/>
 
     <TextView
-        android:id="@+id/tvTime"
+        android:id="@+@id/tvTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -34,7 +34,7 @@
         android:textColor="@color/text_secondary"/>
 
     <TextView
-        android:id="@+id/tvMediaType"
+        android:id="@+@id/tvMediaType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.12"
@@ -45,7 +45,7 @@
         android:textColor="@color/text_secondary"/>
 
     <TextView
-        android:id="@+id/tvMsgId"
+        android:id="@+@id/tvMsgId"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.20"
@@ -55,7 +55,7 @@
         android:textColor="@color/text_secondary"/>
 
     <TextView
-        android:id="@+id/tvSize"
+        android:id="@+@id/tvSize"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.16"
@@ -65,7 +65,7 @@
         android:textColor="@color/text_secondary"/>
 
     <TextView
-        android:id="@+id/tvMsgText"
+        android:id="@+@id/tvMsgText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.36"

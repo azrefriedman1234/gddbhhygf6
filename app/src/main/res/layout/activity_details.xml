@@ -7,7 +7,7 @@
     android:background="@color/cyber_bg">
 
     <FrameLayout
-        android:id="@+id/previewContainer"
+        android:id="@+@id/previewContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#E2E8F0"
@@ -17,33 +17,33 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
-            android:id="@+id/ivPreview"
+            android:id="@+@id/ivPreview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitCenter" />
             
         <com.pasiflonet.mobile.utils.DrawingView
-            android:id="@+id/drawingView"
+            android:id="@+@id/drawingView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"/>
 
         <ImageView
-            android:id="@+id/ivDraggableLogo"
+            android:id="@+@id/ivDraggableLogo"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:visibility="gone"
             android:src="@android:drawable/ic_menu_gallery"/>
             
         <View
-            android:id="@+id/vDisabledOverlay"
+            android:id="@+@id/vDisabledOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#80F4F7FB"
             android:visibility="gone"/>
             
         <TextView
-            android:id="@+id/tvTextOnlyLabel"
+            android:id="@+@id/tvTextOnlyLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEXT ONLY MODE"
@@ -97,7 +97,7 @@
                 android:layout_marginBottom="24dp">
                 
                 <Switch
-                    android:id="@+id/swIncludeMedia"
+                    android:id="@+@id/swIncludeMedia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -121,7 +121,7 @@
                 android:layout_marginBottom="8dp"/>
 
             <LinearLayout
-                android:id="@+id/mediaToolsContainer"
+                android:id="@+@id/mediaToolsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -129,7 +129,7 @@
                 android:layout_marginBottom="16dp">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnModeBlur"
+                    android:id="@+@id/btnModeBlur"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="55dp"
@@ -140,7 +140,7 @@
                     android:layout_marginEnd="8dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnModeLogo"
+                    android:id="@+@id/btnModeLogo"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="55dp"
@@ -160,7 +160,7 @@
                 android:textColor="@color/text_secondary"/>
             
             <SeekBar
-                android:id="@+id/sbLogoSize"
+                android:id="@+@id/sbLogoSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:progress="50"
@@ -182,7 +182,7 @@
                 android:layout_marginBottom="32dp">
                 
                 <EditText
-                    android:id="@+id/etCaption"
+                    android:id="@+@id/etCaption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Write caption..."
@@ -195,7 +195,7 @@
                     android:layout_marginBottom="12dp"/>
                     
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnTranslate"
+                    android:id="@+@id/btnTranslate"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:text="Translate to Hebrew"
@@ -209,7 +209,7 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSend"
+                    android:id="@+@id/btnSend"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:text="SEND SECURELY"
@@ -220,7 +220,7 @@
                     android:layout_marginBottom="16dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnCancel"
+                    android:id="@+@id/btnCancel"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:text="Cancel"
@@ -232,7 +232,7 @@
     </ScrollView>
 
     <FrameLayout
-        android:id="@+id/loadingOverlay"
+        android:id="@+@id/loadingOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#80000000"

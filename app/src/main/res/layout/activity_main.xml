@@ -8,7 +8,7 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+@id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pasiflonet"
@@ -20,7 +20,7 @@
         android:layout_marginTop="18dp"/>
 
     <TextView
-        android:id="@+id/tvSubtitle"
+        android:id="@+@id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cyber Intelligence Console"
@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/btnSettings"
+        android:id="@+@id/btnSettings"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:src="@android:drawable/ic_menu_preferences"
@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
-        android:id="@+id/btnClearCache"
+        android:id="@+@id/btnClearCache"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:src="@android:drawable/ic_menu_delete"
@@ -56,7 +56,7 @@
 
     <!-- API container -->
     <LinearLayout
-        android:id="@+id/apiContainer"
+        android:id="@+@id/apiContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -76,7 +76,7 @@
             android:layout_marginBottom="14dp"/>
 
         <EditText
-            android:id="@+id/etApiId"
+            android:id="@+@id/etApiId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="API ID"
@@ -95,7 +95,7 @@
             android:layout_marginBottom="12dp"/>
 
         <EditText
-            android:id="@+id/etApiHash"
+            android:id="@+@id/etApiHash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="API Hash"
@@ -107,7 +107,7 @@
             android:layout_marginBottom="18dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSaveApi"
+            android:id="@+@id/btnSaveApi"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:text="INITIALIZE SYSTEM"
@@ -119,7 +119,7 @@
 
     <!-- Login container -->
     <LinearLayout
-        android:id="@+id/loginContainer"
+        android:id="@+@id/loginContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -141,13 +141,13 @@
             android:layout_marginBottom="22dp"/>
 
         <LinearLayout
-            android:id="@+id/phoneLayout"
+            android:id="@+@id/phoneLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/etPhone"
+                android:id="@+@id/etPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="+972..."
@@ -159,7 +159,7 @@
                 android:layout_marginBottom="16dp"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSendCode"
+                android:id="@+@id/btnSendCode"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:text="SEND CODE"
@@ -170,14 +170,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/codeLayout"
+            android:id="@+@id/codeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone">
 
             <EditText
-                android:id="@+id/etCode"
+                android:id="@+@id/etCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="12345"
@@ -190,7 +190,7 @@
                 android:layout_marginBottom="16dp"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnVerify"
+                android:id="@+@id/btnVerify"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:text="VERIFY"
@@ -201,14 +201,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/passwordLayout"
+            android:id="@+@id/passwordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone">
 
             <EditText
-                android:id="@+id/etPassword"
+                android:id="@+@id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="2FA Password"
@@ -220,7 +220,7 @@
                 android:layout_marginBottom="16dp"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnVerifyPassword"
+                android:id="@+@id/btnVerifyPassword"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:text="UNLOCK"
@@ -233,7 +233,7 @@
 
     <!-- Main content -->
     <LinearLayout
-        android:id="@+id/mainContent"
+        android:id="@+@id/mainContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -242,7 +242,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMessages"
+            android:id="@+@id/rvMessages"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -251,7 +251,7 @@
 
     <!-- DASHBOARD: X + RADAR (added) -->
     <LinearLayout
-        android:id="9809id/dashboardWidgets"
+        android:id="@+@id/dashboardWidgets"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_margin="8dp"
@@ -263,13 +263,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.pasiflonet.mobile.ui.RadarView
-            android:id="10337id/radarView"
+            android:id="@+@id/radarView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="10554id/rvX"
+            android:id="@+@id/rvX"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"/>
