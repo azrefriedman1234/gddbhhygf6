@@ -72,7 +72,7 @@ object DashboardWidgets {
                     if (k.isEmpty()) false else seen.add(k)
                 }.take(60)
 
-                main.post { adapter.submit(cleaned) }
+                main.post { adapter.submitList(cleaned) }
             }
         }
 

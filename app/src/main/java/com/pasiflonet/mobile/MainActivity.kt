@@ -1,5 +1,8 @@
 package com.pasiflonet.mobile
 
+import com.pasiflonet.mobile.ui.IntelFeedActivity
+import com.pasiflonet.mobile.ui.RadarActivity
+
 import com.pasiflonet.mobile.utils.CrashLogger
 import android.view.Menu
 import android.view.MenuItem

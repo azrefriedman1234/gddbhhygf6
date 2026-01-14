@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Pasiflonet"
@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btnSettings"/>
 
     <TextView
-        android:id="@+id/tvSubtitle"
+        android:id="/tvSubtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Live"
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btnSettings"/>
 
     <ImageButton
-        android:id="@+id/btnSettings"
+        android:id="/btnSettings"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:contentDescription="Settings"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
-        android:id="@+id/btnClearCache"
+        android:id="/btnClearCache"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="ניקוי"
@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <LinearLayout
-        android:id="@+id/apiContainer"
+        android:id="/apiContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -59,20 +59,20 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <EditText
-            android:id="@+id/etApiId"
+            android:id="/etApiId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="API ID"
             android:inputType="number" />
 
         <EditText
-            android:id="@+id/etApiHash"
+            android:id="/etApiHash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="API HASH" />
 
         <Button
-            android:id="@+id/btnSaveApi"
+            android:id="/btnSaveApi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="שמור" />
@@ -80,7 +80,7 @@
 
     <!-- LOGIN (shown when not authenticated) -->
     <LinearLayout
-        android:id="@+id/loginContainer"
+        android:id="/loginContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -92,13 +92,13 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/phoneLayout"
+            android:id="/phoneLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/etPhone"
+                android:id="/etPhone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -106,21 +106,21 @@
                 android:inputType="phone" />
 
             <Button
-                android:id="@+id/btnSendCode"
+                android:id="/btnSendCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Send" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/codeLayout"
+            android:id="/codeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="8dp">
 
             <EditText
-                android:id="@+id/etCode"
+                android:id="/etCode"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -128,21 +128,21 @@
                 android:inputType="number" />
 
             <Button
-                android:id="@+id/btnVerify"
+                android:id="/btnVerify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Verify" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/passwordLayout"
+            android:id="/passwordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="8dp">
 
             <EditText
-                android:id="@+id/etPassword"
+                android:id="/etPassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -150,7 +150,7 @@
                 android:inputType="textPassword" />
 
             <Button
-                android:id="@+id/btnVerifyPassword"
+                android:id="/btnVerifyPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="OK" />
@@ -159,7 +159,7 @@
 
     <!-- MAIN CONTENT (Telegram + X + Radar on the SAME screen) -->
     <LinearLayout
-        android:id="@+id/mainContent"
+        android:id="/mainContent"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -171,26 +171,26 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/dashboardWidgets"
+            android:id="/dashboardWidgets"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:orientation="horizontal">
 
             <com.pasiflonet.mobile.ui.RadarView
-                android:id="@+id/radarView"
+                android:id="/radarView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvX"
+                android:id="/rvX"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMessages"
+            android:id="/rvMessages"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
