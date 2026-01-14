@@ -1,5 +1,7 @@
 package com.pasiflonet.mobile
 
+import com.pasiflonet.mobile.ui.DashboardWidgets
+
 import com.pasiflonet.mobile.ui.IntelFeedActivity
 import com.pasiflonet.mobile.ui.RadarActivity
 
