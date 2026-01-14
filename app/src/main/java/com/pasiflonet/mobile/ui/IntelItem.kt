@@ -1,9 +1,11 @@
-package com.pasiflonet.mobile.ui
+package com.pasiflonet.mobile.intel
 
 data class IntelItem(
-    val title: String,
-    val link: String?,
-    val source: String,
-    val publishedAt: Long = 0L,
-    val titleHe: String? = null
+    val title: String? = "",
+    val description: String? = "",
+    val link: String? = "",
+    val published: String? = "",
+    val text: String? = title,
+    val publishedAtMillis: Long = 0L,
+    val url: String? = link
 )
