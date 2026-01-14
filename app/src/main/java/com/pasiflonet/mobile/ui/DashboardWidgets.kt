@@ -68,7 +68,7 @@ object DashboardWidgets {
                 // dedupe by link/title
                 val seen = HashSet<String>()
                 val cleaned = combined.filter {
-                    val k = (it.link ?: it.title).trim()
+                    val k = (it.link ?: it.title).orEmpty().trim()
                     if (k.isEmpty()) false else seen.add(k)
                 }.take(60)
 
