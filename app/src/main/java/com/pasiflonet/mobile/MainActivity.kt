@@ -188,4 +188,17 @@ class MainActivity : BaseActivity() {
         }
         requestPermissionLauncher.launch(perms.toTypedArray()) 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_intel_feed -> { startActivity(Intent(this, com.pasiflonet.mobile.ui.IntelFeedActivity::class.java)); true }
+            R.id.action_radar -> { startActivity(Intent(this, com.pasiflonet.mobile.ui.RadarActivity::class.java)); true }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }
