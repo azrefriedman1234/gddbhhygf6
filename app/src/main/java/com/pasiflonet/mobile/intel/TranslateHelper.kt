@@ -13,19 +13,13 @@ object TranslateHelper {
     private const val TAG = "TranslateHelper"
     private val exec = Executors.newSingleThreadExecutor()
 
-    /**
-     * אפשר להגדיר מפתח אם יש לך. אם לא – משאירים ריק.
-     * שים לב: חלק מהאינסטנסים הציבוריים מוגבלים בקצב.
-     */
     @Volatile var apiKey: String = ""
-
-    /** נסה כמה endpoints חינמיים (fallback). */
     @Volatile var endpoints: List<String> = listOf(
         "https://libretranslate.de/translate",
         "https://libretranslate.com/translate"
     )
 
-    // שימוש נפוץ: translate(text){...} => יעד עברית
+    // ---- API חדש ----
     fun translate(text: String, onResult: (String) -> Unit) =
         translate(ctx = null, text = text, source = "auto", target = "he", onResult = onResult)
 
@@ -93,4 +87,15 @@ object TranslateHelper {
         if (lastErr != null) throw lastErr
         return text
     }
+
+    // ---- תאימות לקוד הישן (כדי ש-IntelFeedActivity יתקמפל) ----
+    fun ensureModel(ctx: Context) { /* no-op */ }
+    fun ensureModel(ctx: Context, onReady: () -> Unit) { onReady() }
+    fun ensureModel(ctx: Context, onReady: (Boolean) -> Unit) { onReady(true) }
+
+    fun enToHe(text: String, onResult: (String) -> Unit) {
+        translate(ctx = null, text = text, source = "en", target = "he", onResult = onResult)
+    }
+
+    fun close() { /* no-op */ }
 }

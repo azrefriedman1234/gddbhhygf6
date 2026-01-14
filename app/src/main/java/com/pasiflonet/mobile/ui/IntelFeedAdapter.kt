@@ -10,10 +10,17 @@ class IntelFeedAdapter(
     private val onClick: ((Any) -> Unit)? = null
 ) : RecyclerView.Adapter<IntelFeedAdapter.Holder>() {
 
+    // ctor תאימות: IntelFeedAdapter(list){...}
+    constructor(initialItems: List<*>?, onClick: ((Any) -> Unit)? = null) : this(onClick) {
+        setItems(initialItems)
+    }
+
     private val items = mutableListOf<Any>()
 
+    fun submit(newItems: List<*>?) = setItems(newItems)     // תאימות (DashboardWidgets/IntelFeedActivity)
     fun submitList(newItems: List<*>?) = setItems(newItems)
     fun updateList(newItems: List<*>?) = setItems(newItems)
+
     fun setItems(newItems: List<*>?) {
         items.clear()
         newItems?.forEach { if (it != null) items.add(it) }
@@ -45,7 +52,6 @@ class IntelFeedAdapter(
     private fun pickString(obj: Any, names: List<String>): String? {
         val c = obj.javaClass
         for (n in names) {
-            // getter
             try {
                 val getter = "get" + n.replaceFirstChar { it.uppercase() }
                 val m = c.methods.firstOrNull { it.parameterTypes.isEmpty() && (it.name == getter || it.name == n) }
@@ -53,7 +59,6 @@ class IntelFeedAdapter(
                 val s = v?.toString()?.trim()
                 if (!s.isNullOrEmpty() && s != "null") return s
             } catch (_: Exception) {}
-            // field
             try {
                 val f = c.declaredFields.firstOrNull { it.name == n }
                 if (f != null) {

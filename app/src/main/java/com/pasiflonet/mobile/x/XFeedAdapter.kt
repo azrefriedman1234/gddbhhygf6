@@ -14,8 +14,10 @@ class XFeedAdapter(
 
     private val items = mutableListOf<Any>()
 
+    fun submit(newItems: List<*>?) = setItems(newItems)     // תאימות (DashboardWidgets)
     fun submitList(newItems: List<*>?) = setItems(newItems)
     fun updateList(newItems: List<*>?) = setItems(newItems)
+
     fun setItems(newItems: List<*>?) {
         items.clear()
         newItems?.forEach { if (it != null) items.add(it) }
@@ -41,9 +43,8 @@ class XFeedAdapter(
             if (u.isNotEmpty()) {
                 if (onOpen != null) onOpen.invoke(u)
                 else {
-                    try {
-                        holder.itemView.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(u)))
-                    } catch (_: Exception) {}
+                    try { holder.itemView.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(u))) }
+                    catch (_: Exception) {}
                 }
             }
         }
