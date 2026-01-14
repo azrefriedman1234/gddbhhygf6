@@ -1,64 +1,41 @@
 package com.pasiflonet.mobile.ui
 
-import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.pasiflonet.mobile.intel.IntelStoryItem
 
 class IntelFeedAdapter(
-    private val onClick: ((IntelItem) -> Unit)? = null
+    private val onClick: ((IntelStoryItem) -> Unit)? = null
 ) : RecyclerView.Adapter<IntelFeedAdapter.VH>() {
 
-    private val items = ArrayList<IntelItem>()
+    private val items = ArrayList<IntelStoryItem>()
 
-    fun setItems(newItems: List<IntelItem>) {
+    fun submit(list: List<IntelStoryItem>) {
         items.clear()
-        items.addAll(newItems)
+        items.addAll(list)
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val root = LinearLayout(parent.context).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(18, 14, 18, 14)
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        }
-        val tvTitle = TextView(parent.context).apply {
-            textSize = 15f
-        }
-        val tvHe = TextView(parent.context).apply {
-            textSize = 13f
-            alpha = 0.85f
-        }
-        val tvSrc = TextView(parent.context).apply {
-            textSize = 11f
-            alpha = 0.7f
-            gravity = Gravity.END
-        }
-        root.addView(tvTitle)
-        root.addView(tvHe)
-        root.addView(tvSrc)
-        return VH(root, tvTitle, tvHe, tvSrc)
+        val tv = LayoutInflater.from(parent.context)
+            .inflate(android.R.layout.simple_list_item_2, parent, false)
+        return VH(tv)
+    }
+
+    override fun onBindViewHolder(holder: VH, position: Int) {
+        val it = items[position]
+        holder.t1.text = it.title
+        holder.t2.text = it.source + (if (!it.summary.isNullOrBlank()) " • ${it.summary}" else "")
+        holder.itemView.setOnClickListener { onClick?.invoke(it) }
     }
 
     override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: VH, position: Int) {
-        val it = items[position]
-        holder.tvTitle.text = it.title
-        holder.tvHe.text = it.titleHe ?: ""
-        holder.tvSrc.text = it.source
-        holder.itemView.setOnClickListener { onClick?.invoke(it) }
+    class VH(v: View) : RecyclerView.ViewHolder(v) {
+        val t1: TextView = v.findViewById(android.R.id.text1)
+        val t2: TextView = v.findViewById(android.R.id.text2)
     }
-
-    class VH(
-        root: LinearLayout,
-        val tvTitle: TextView,
-        val tvHe: TextView,
-        val tvSrc: TextView
-    ) : RecyclerView.ViewHolder(root)
 }
