@@ -2,47 +2,111 @@ package com.pasiflonet.mobile.ui
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 
+data class RadarBlip(
+    val angleDeg: Float,   // 0..360
+    val radius01: Float,   // 0..1
+    val label: String = ""
+)
+
 class RadarView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : View(context, attrs) {
 
-    // נתונים פשוטים: ערך 0..1 = “כמה חדש”, זווית 0..2π
-    data class Blip(val r: Float, val a: Float)
+    private val ui = Handler(Looper.getMainLooper())
+    private var sweep = 0f
 
-    private val bg = Paint(Paint.ANTI_ALIAS_FLAG).apply { strokeWidth = 3f; style = Paint.Style.STROKE }
-    private val blip = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
+    private val grid = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 2f
+        color = Color.argb(120, 80, 255, 160)
+    }
 
-    var blips: List<Blip> = emptyList()
-        set(v) { field = v; invalidate() }
+    private val sweepPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 4f
+        color = Color.argb(200, 0, 255, 140)
+    }
 
-    override fun onDraw(c: Canvas) {
-        super.onDraw(c)
+    private val blipPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = Color.argb(230, 0, 255, 140)
+    }
+
+    private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.argb(220, 210, 255, 235)
+        textSize = 26f
+    }
+
+    private var blips: List<RadarBlip> = emptyList()
+
+    private val tick = object : Runnable {
+        override fun run() {
+            sweep = (sweep + 2.2f) % 360f
+            invalidate()
+            ui.postDelayed(this, 16L)
+        }
+    }
+
+    fun setBlips(list: List<RadarBlip>) {
+        blips = list.take(24)
+        invalidate()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        ui.removeCallbacks(tick)
+        ui.post(tick)
+    }
+
+    override fun onDetachedFromWindow() {
+        ui.removeCallbacks(tick)
+        super.onDetachedFromWindow()
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+
         val w = width.toFloat()
         val h = height.toFloat()
         val cx = w / 2f
         val cy = h / 2f
-        val rad = min(cx, cy) * 0.92f
+        val r = min(w, h) * 0.46f
 
-        // טבעות
-        for (i in 1..4) {
-            c.drawCircle(cx, cy, rad * (i / 4f), bg)
-        }
-        // צלב
-        c.drawLine(cx - rad, cy, cx + rad, cy, bg)
-        c.drawLine(cx, cy - rad, cx, cy + rad, bg)
+        // circles
+        canvas.drawCircle(cx, cy, r, grid)
+        canvas.drawCircle(cx, cy, r * 0.66f, grid)
+        canvas.drawCircle(cx, cy, r * 0.33f, grid)
 
+        // cross
+        canvas.drawLine(cx - r, cy, cx + r, cy, grid)
+        canvas.drawLine(cx, cy - r, cx, cy + r, grid)
+
+        // sweep line
+        val rad = Math.toRadians(sweep.toDouble())
+        val x = (cx + cos(rad) * r).toFloat()
+        val y = (cy + sin(rad) * r).toFloat()
+        canvas.drawLine(cx, cy, x, y, sweepPaint)
+
+        // blips
         for (b in blips) {
-            val rr = rad * (1f - b.r.coerceIn(0f, 1f))
-            val x = cx + rr * cos(b.a)
-            val y = cy + rr * sin(b.a)
-            c.drawCircle(x, y, 10f, blip)
+            val a = Math.toRadians(b.angleDeg.toDouble())
+            val rr = (b.radius01.coerceIn(0f, 1f) * r)
+            val bx = (cx + cos(a) * rr).toFloat()
+            val by = (cy + sin(a) * rr).toFloat()
+            canvas.drawCircle(bx, by, 7f, blipPaint)
         }
+
+        canvas.drawText("RADAR", 16f, (h - 16f), textPaint)
     }
 }

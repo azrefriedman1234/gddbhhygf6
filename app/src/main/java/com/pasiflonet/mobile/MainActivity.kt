@@ -37,6 +37,7 @@ class MainActivity : BaseActivity() {
         try {
             b = ActivityMainBinding.inflate(layoutInflater)
             setContentView(b.root)
+        com.pasiflonet.mobile.ui.DashboardWidgets.attach(this)
         } catch (e: Exception) {
             // אם העיצוב נכשל, נציג מסך חירום
             Log.e("UI_CRASH", "Layout Inflation Failed", e)
