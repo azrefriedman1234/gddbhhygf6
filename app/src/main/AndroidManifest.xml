@@ -44,5 +44,6 @@
         <service
             android:name="com.pasiflonet.mobile.ffmpeg.FfmpegIsolatedService"
             android:exported="false"
-            android:process=":ffmpeg" /></application>
+            android:process=":ffmpeg" />    <activity android:name=".ui.RssSourcesActivity" android:exported="false" />
+</application>
 </manifest>
