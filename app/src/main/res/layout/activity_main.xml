@@ -251,7 +251,7 @@
 
     <!-- DASHBOARD: X + RADAR (added) -->
     <LinearLayout
-        android:id="9760 9758id/dashboardWidgets"
+        android:id="@+id/dashboardWidgets"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_margin="8dp"
