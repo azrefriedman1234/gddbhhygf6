@@ -251,7 +251,7 @@
 
     <!-- DASHBOARD: X + RADAR (added) -->
     <LinearLayout
-        android:id="@+id/dashboardWidgets"
+        android:id="9809id/dashboardWidgets"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_margin="8dp"
@@ -263,13 +263,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.pasiflonet.mobile.ui.RadarView
-            android:id="@+id/radarView"
+            android:id="10337id/radarView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvX"
+            android:id="10554id/rvX"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"/>
