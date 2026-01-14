@@ -27,7 +27,7 @@
             android:layout_marginBottom="6dp"/>
 
         <EditText
-            android:id="/etTargetUsername"
+            android:id="@+id/etTargetUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/channel_hint"
@@ -53,14 +53,14 @@
             android:layout_marginBottom="18dp">
 
             <ImageView
-                android:id="/ivCurrentLogo"
+                android:id="@+id/ivCurrentLogo"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:background="@drawable/bg_cyber_input"
                 android:scaleType="fitCenter"/>
 
             <Button
-                android:id="/btnSelectLogo"
+                android:id="@+id/btnSelectLogo"
                 android:layout_width="0dp"
                 android:layout_height="72dp"
                 android:layout_weight="1"
@@ -73,7 +73,7 @@
         </LinearLayout>
 
         <Button
-            android:id="/btnClearCache"
+            android:id="@+id/btnClearCache"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:text="@string/clear_cache"
@@ -84,7 +84,7 @@
             android:layout_marginBottom="14dp"/>
 
         <Button
-            android:id="/btnSaveSettings"
+            android:id="@+id/btnSaveSettings"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:text="@string/save_settings"

@@ -6,14 +6,14 @@
     android:padding="10dp">
 
     <TextView
-        android:id="/tvXTitle"
+        android:id="@+id/tvXTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="14sp" />
 
     <TextView
-        android:id="/tvXTime"
+        android:id="@+id/tvXTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -21,14 +21,14 @@
         android:paddingTop="2dp" />
 
     <TextView
-        android:id="/tvXText"
+        android:id="@+id/tvXText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="13sp"
         android:paddingTop="6dp" />
 
     <TextView
-        android:id="/tvXHe"
+        android:id="@+id/tvXHe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="13sp"
