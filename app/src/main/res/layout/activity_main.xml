@@ -263,13 +263,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.pasiflonet.mobile.ui.RadarView
-            android:id="9760 9758id/radarView"
+            android:id="@+id/radarView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="9760 9758id/rvX"
+            android:id="@+id/rvX"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"/>
