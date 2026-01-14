@@ -1,73 +1,64 @@
 package com.pasiflonet.mobile.ui
 
-import android.view.LayoutInflater
-import android.view.View
+import android.view.Gravity
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class IntelFeedAdapter(
-    private val onClick: ((Any) -> Unit)? = null
-) : RecyclerView.Adapter<IntelFeedAdapter.Holder>() {
+    private val onClick: ((IntelItem) -> Unit)? = null
+) : RecyclerView.Adapter<IntelFeedAdapter.VH>() {
 
-    // ctor תאימות: IntelFeedAdapter(list){...}
-    constructor(initialItems: List<*>?, onClick: ((Any) -> Unit)? = null) : this(onClick) {
-        setItems(initialItems)
-    }
+    private val items = ArrayList<IntelItem>()
 
-    private val items = mutableListOf<Any>()
-
-    fun submit(newItems: List<*>?) = setItems(newItems)     // תאימות (DashboardWidgets/IntelFeedActivity)
-    fun submitList(newItems: List<*>?) = setItems(newItems)
-    fun updateList(newItems: List<*>?) = setItems(newItems)
-
-    fun setItems(newItems: List<*>?) {
+    fun setItems(newItems: List<IntelItem>) {
         items.clear()
-        newItems?.forEach { if (it != null) items.add(it) }
+        items.addAll(newItems)
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val v = LayoutInflater.from(parent.context)
-            .inflate(android.R.layout.simple_list_item_2, parent, false)
-        return Holder(v)
-    }
-
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-        val item = items[position]
-        val title = pickString(item, listOf("title","headline","text","content","message")) ?: item.toString()
-        val sub = pickString(item, listOf("translated","he","translation","source","url","link")) ?: ""
-        holder.t1.text = title
-        holder.t2.text = sub
-        holder.itemView.setOnClickListener { onClick?.invoke(item) }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+        val root = LinearLayout(parent.context).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(18, 14, 18, 14)
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        }
+        val tvTitle = TextView(parent.context).apply {
+            textSize = 15f
+        }
+        val tvHe = TextView(parent.context).apply {
+            textSize = 13f
+            alpha = 0.85f
+        }
+        val tvSrc = TextView(parent.context).apply {
+            textSize = 11f
+            alpha = 0.7f
+            gravity = Gravity.END
+        }
+        root.addView(tvTitle)
+        root.addView(tvHe)
+        root.addView(tvSrc)
+        return VH(root, tvTitle, tvHe, tvSrc)
     }
 
     override fun getItemCount(): Int = items.size
 
-    class Holder(v: View) : RecyclerView.ViewHolder(v) {
-        val t1: TextView = v.findViewById(android.R.id.text1)
-        val t2: TextView = v.findViewById(android.R.id.text2)
+    override fun onBindViewHolder(holder: VH, position: Int) {
+        val it = items[position]
+        holder.tvTitle.text = it.title
+        holder.tvHe.text = it.titleHe ?: ""
+        holder.tvSrc.text = it.source
+        holder.itemView.setOnClickListener { onClick?.invoke(it) }
     }
 
-    private fun pickString(obj: Any, names: List<String>): String? {
-        val c = obj.javaClass
-        for (n in names) {
-            try {
-                val getter = "get" + n.replaceFirstChar { it.uppercase() }
-                val m = c.methods.firstOrNull { it.parameterTypes.isEmpty() && (it.name == getter || it.name == n) }
-                val v = m?.invoke(obj)
-                val s = v?.toString()?.trim()
-                if (!s.isNullOrEmpty() && s != "null") return s
-            } catch (_: Exception) {}
-            try {
-                val f = c.declaredFields.firstOrNull { it.name == n }
-                if (f != null) {
-                    f.isAccessible = true
-                    val s = f.get(obj)?.toString()?.trim()
-                    if (!s.isNullOrEmpty() && s != "null") return s
-                }
-            } catch (_: Exception) {}
-        }
-        return null
-    }
+    class VH(
+        root: LinearLayout,
+        val tvTitle: TextView,
+        val tvHe: TextView,
+        val tvSrc: TextView
+    ) : RecyclerView.ViewHolder(root)
 }
