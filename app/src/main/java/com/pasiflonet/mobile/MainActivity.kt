@@ -197,8 +197,8 @@ class MainActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_intel_feed -> { startActivity(Intent(this, com.pasiflonet.mobile.ui.IntelFeedActivity::class.java)); true }
-            R.id.action_radar -> { startActivity(Intent(this, com.pasiflonet.mobile.ui.RadarActivity::class.java)); true }
+            R.id.action_intel_feed -> { startActivity(Intent(this, com.pasiflonet.mobile.ui.com.pasiflonet.mobile.ui.IntelFeedActivity::class.java)); true }
+            R.id.action_radar -> { startActivity(Intent(this, com.pasiflonet.mobile.ui.com.pasiflonet.mobile.ui.RadarActivity::class.java)); true }
             else -> super.onOptionsItemSelected(item)
         }
     }

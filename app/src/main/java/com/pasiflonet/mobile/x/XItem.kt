@@ -1,9 +1,10 @@
 package com.pasiflonet.mobile.x
 
+
 data class XItem(
-    val title: String,
-    val text: String,
-    val link: String?,
-    val publishedAtMillis: Long,
-    var heText: String? = null
+    val text: String = "",
+    val link: String? = null,
+    val publishedAtMillis: Long = 0L,
+    val description: String? = null,
+    val published: String? = null
 )
